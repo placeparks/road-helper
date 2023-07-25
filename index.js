@@ -3,6 +3,8 @@ const cors = require('cors');
 const express = require('express');
 const fcmRouter = require('./routes/sendNotification'); 
 const getAllUsers = require('./routes/getAllUsers');
+const sendNotification = require('./routes/sendNotification');
+const usersRouter = require('./routes/usersInfo'); 
 connectToMongo();
 const app = express();
 const port = process.env.PORT || 5000; // Change this line
@@ -22,6 +24,8 @@ app.use('/api/auth', require('./routes/Auth'));
 app.use('/api/UserDetail', require('./routes/UserDetail'));
 app.use('/fcm', fcmRouter);
 app.use('/', getAllUsers);
+app.use('/', sendNotification);
+app.use('/api/users', usersRouter); 
 
 // Change this line
 const server = app.listen(port, () => console.log(`Api backend listening on port ${port}!`));
