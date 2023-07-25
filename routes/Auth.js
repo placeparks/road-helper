@@ -21,7 +21,8 @@ router.post('/signup',[
     body('contactNumber').isLength({min:10}),
     body('emergencyContactNumber').isLength({min:10}),
     body('gender').isLength({min:3}),
-    body('vehicleType').isLength({min:3})
+    body('vehicleType').isLength({min:3}),
+    body('token')
   ], 
  async (req, res)=> {
   let success = false;
@@ -60,7 +61,8 @@ const secPass= await bcrypt.hash(req.body.password,salt);
     contactNumber: req.body.contactNumber,
     emergencyContactNumber: req.body.emergencyContactNumber,
     gender: req.body.gender,
-    vehicleType: req.body.vehicleType
+    vehicleType: req.body.vehicleType,
+      token: req.body.token
   });
 
 //generate jwt token
@@ -142,6 +144,7 @@ router.put('/update', [
   body('emergencyContactNumber').optional(),
   body('gender').optional().isIn(['male', 'female', 'other']),
   body('vehicleType').optional(),
+    body('token').optional()
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -169,6 +172,7 @@ router.put('/update', [
       if (req.body.emergencyContactNumber) user.emergencyContactNumber = req.body.emergencyContactNumber;
       if (req.body.gender) user.gender = req.body.gender;
       if (req.body.vehicleType) user.vehicleType = req.body.vehicleType;
+      if (req.body.token) user.token= req.body.token;
 
       // Save the updated user
       await user.save();
