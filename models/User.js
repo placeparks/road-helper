@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema({
     emergencyContactNumber: { type: String, required: true },
     gender: { type: String, required: true, enum: ['male', 'female', 'other'] },
     vehicleType: { type: String, required: true },
-    fcmToken: { type: String, required: false }
+    token: { type: String, required: true}
 });
 
 // Hash the password before saving it to the database
